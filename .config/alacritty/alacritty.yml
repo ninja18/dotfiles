@@ -1,0 +1,122 @@
+shell:
+  program: /bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux"
+
+schemes:
+
+  gruvbox_dark: &gruvbox_dark
+    primary:
+      # hard contrast: background = '0x1d2021'
+      background: '0x282828'
+      # soft contrast: background = '0x32302f'
+      foreground: '0xebdbb2'
+    normal:
+      black:   '0x282828'
+      red:     '0xcc241d'
+      green:   '0x98971a'
+      yellow:  '0xd79921'
+      blue:    '0x458588'
+      magenta: '0xb16286'
+      cyan:    '0x689d6a'
+      white:   '0xa89984'
+    bright:
+      black:   '0x928374'
+      red:     '0xfb4934'
+      green:   '0xb8bb26'
+      yellow:  '0xfabd2f'
+      blue:    '0x83a598'
+      magenta: '0xd3869b'
+      cyan:    '0x8ec07c'
+      white:   '0xebdbb2'
+
+  material_theme_mod: &material_theme_mod
+    primary:
+      background: '0x1e282d'
+      foreground: '0xc4c7d1'
+    normal:
+      black:   '0x666666'
+      red:     '0xeb606b'
+      green:   '0xc3e88d'
+      yellow:  '0xf7eb95'
+      blue:    '0x80cbc4'
+      magenta: '0xff2f90'
+      cyan:    '0xaeddff'
+      white:   '0xffffff'
+    bright:
+      black:   '0xa1a1a1'
+      red:     '0xeb606b'
+      green:   '0xc3e88d'
+      yellow:  '0xf7eb95'
+      blue:    '0x7dc6bf'
+      magenta: '0x6c71c4'
+      cyan:    '0x35434d'
+      white:   '0xffffff'
+
+  tomorrow_night:  &tomorrow_night
+    primary:
+      background: '#1d1f21'
+      foreground: '#c5c8c6'
+  
+    cursor:
+      text: '#1d1f21'
+      cursor: '#ffffff'
+  
+    normal:
+      black:   '#1d1f21'
+      red:     '#cc6666'
+      green:   '#b5bd68'
+      yellow:  '#e6c547'
+      blue:    '#81a2be'
+      magenta: '#b294bb'
+      cyan:    '#70c0ba'
+      white:   '#373b41'
+  
+    bright:
+      black:   '#666666'
+      red:     '#ff3334'
+      green:   '#9ec400'
+      yellow:  '#f0c674'
+      blue:    '#81a2be'
+      magenta: '#b77ee0'
+      cyan:    '#54ced6'
+      white:   '#282a2e'
+  
+  shajtheme: &shajtheme
+    primary:
+      background: '0x384242'
+      foreground: '0x978A83'
+    # Normal colors
+    normal:
+      black:   '0x384242'
+      red:     '0xD17171'
+      green:   '0x6f98b3'
+      yellow:  '0xCBA25B'
+      blue:    '0x999952'
+      magenta: '0xfcdbd9'
+      cyan:    '0x4B7F99'
+      white:   '0xf0fdff'
+
+colors: *gruvbox_dark
+
+
+font:
+  normal:
+    family: Source Code Pro
+    style: Regular
+
+  bold:
+    family: Source Code Pro
+    style: Medium
+
+  italic:
+    family: Source Code Pro
+    style: Light Italic
+
+  bold_italic:
+    family: Source Code Pro
+    style: Semibold Italic
+
+  size: 19
