@@ -15,6 +15,8 @@ set incsearch           " live highlighting while typing
 set laststatus=2        " show status line below always (0 = never)
 set ruler               " show line number and column number at the bottom
 set showcmd             " show the command being typed at bottom
+set termguicolors       " for vibrant colors
+colorscheme desert      " desert and evening are decent looking 
 syntax enable           " syntax highlighting [enable => current color setting; on => overrides color setting]
 
 " Overriding default programs
@@ -32,15 +34,18 @@ augroup END
 
 call plug#begin()
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf binary required for vim; should be already installed
-Plug 'junegunn/fzf.vim' " fzf vim support plugin 
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf binary required for vim; should be already installed
+    Plug 'junegunn/fzf.vim' " fzf vim support plugin 
+    Plug 'christoomey/vim-tmux-navigator' " navigating panes using Ctrl-hjkl between vim and tmux
+    Plug 'lervag/vimtex' " latex support for vim
+    Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " add more support to conceal feature of vim
 
 call plug#end()
 
 " PLUGIN CONFIGURATIONS & KEYBINDINGS
 
 " fzf
-let g:fzf_preview_window = '' " disable fzf preview window while searching; to enable 'right:60%'
+let g:fzf_preview_window = ''           " disable fzf preview window while searching; to enable 'right:60%'
 nnoremap <leader>fi  :Files<CR> 
 nnoremap <leader>fg  :GFiles?<CR>
 nnoremap <leader>fl  :Lines<CR>
@@ -51,3 +56,16 @@ nnoremap <leader>fs  :History/<CR>
 nnoremap <leader>fc  :History:<CR>
 nnoremap <leader>fC  :Colors<CR>
 
+" vimtex
+let g:tex_flavor = 'latex'              " tex type either latex,plain,etc
+let g:vimtex_view_method = 'zathura'    " pdf viewer to use when running view cmd
+let g:vimtex_quickfix_mode = 0          " to avoid error window unless manually called 
+
+" tex-conceal
+set conceallevel=1                      " try to conceal or show the normal text
+let g:tex_conceal = 'abdmg'             " convert tex to actual utf-8 characters only super and subscript is left out
+let g:tex_superscripts = "[0-9a-zA-W.,:;+-<>/()=]" " super scripts only allowed by the font [yet to try and refine]
+let g:tex_subscripts = "[0-9aehijklmnoprstuvx,+-/().]" " sub scripts only allowed by the font [yet to try and refine]
+let g:tex_conceal_frac = 1                " to conceal fraction of 1
+hi Conceal guibg=none 
+hi Conceal cterm=none
