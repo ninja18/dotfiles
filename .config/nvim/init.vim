@@ -39,12 +39,14 @@ call plug#begin()
     Plug 'christoomey/vim-tmux-navigator' " navigating panes using Ctrl-hjkl between vim and tmux
     Plug 'lervag/vimtex' " latex support for vim
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " add more support to conceal feature of vim
+    Plug 'SirVer/ultisnips' " snippet plugin
 
 call plug#end()
 
 " PLUGIN CONFIGURATIONS & KEYBINDINGS
 
 " fzf
+let $FZF_DEFAULT_COMMAND = "rg --files --hidden -g '!.git' -g '!Library' -g '!Music'" " have to override default fzf command in vim as well
 let g:fzf_preview_window = ''           " disable fzf preview window while searching; to enable 'right:60%'
 nnoremap <leader>fi  :Files<CR> 
 nnoremap <leader>fg  :GFiles?<CR>
@@ -69,3 +71,12 @@ let g:tex_subscripts = "[0-9aehijklmnoprstuvx,+-/().]" " sub scripts only allowe
 let g:tex_conceal_frac = 1                " to conceal fraction of 1
 hi Conceal guibg=none 
 hi Conceal cterm=none
+
+" ultisnips
+let g:UltiSnipsExpandTrigger = "<tab>"          " expand the snippet on tab
+let g:UltiSnipsJumpForwardTrigger = "<tab>"     " jump to next placeholder on tab
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"  " jump back to previous on shift tab 
+let g:UltiSnipsEditSplit="vertical"             " use vertical split for snippet edit 
+set rtp+=~/Documents/Physics/current-course     " use snippets from this path also
+
+
