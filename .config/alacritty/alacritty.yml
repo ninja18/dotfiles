@@ -5,6 +5,9 @@ shell:
     - -c
     - "tmux attach || tmux"
 
+key_bindings: 
+  - { key: A, mods: Alt, chars: "\x1ba" }
+
 schemes:
 
   gruvbox_dark: &gruvbox_dark

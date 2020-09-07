@@ -20,6 +20,13 @@ plugins=(git z)
 plugins=(zsh-autosuggestions)
 
 
+# Functions
+
+_fzf_compgen_path() {
+    # overriding the fzf default find command to use ripgrep 
+    rg --files --hidden --glob '!.git' --glob '!Library' --glob '!Music'
+}
+
 # Source plugin files
 
 source $ZSH/oh-my-zsh.sh
