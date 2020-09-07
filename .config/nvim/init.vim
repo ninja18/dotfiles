@@ -18,8 +18,11 @@ set showcmd             " show the command being typed at bottom
 set termguicolors       " for vibrant colors
 colorscheme desert      " desert and evening are decent looking 
 syntax enable           " syntax highlighting [enable => current color setting; on => overrides color setting]
+set mouse=nicr          " mouse support in normal, insert, cmd line mode
+set backspace=2         " backspace to do indent,eol,start based working
 
 " Overriding default programs
+let g:python3_host_prog = "$HOME/.pyenv/shims/python"       " python path since using pyenv
 set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow " replacing grep program with ripgrep when using ':grep pat'
 
 augroup general
@@ -79,4 +82,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"  " jump back to previous on shift
 let g:UltiSnipsEditSplit="vertical"             " use vertical split for snippet edit 
 set rtp+=~/Documents/Physics/current-course     " use snippets from this path also
 
+" Inkscape Configuration 
 
+" to open inkscape with given title in insert mode
+inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
+" open popup to search for inkscape files in figures/ folder in normal mode
+nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
