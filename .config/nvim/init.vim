@@ -20,6 +20,7 @@ colorscheme desert      " desert and evening are decent looking
 syntax enable           " syntax highlighting [enable => current color setting; on => overrides color setting]
 set mouse=nicr          " mouse support in normal, insert, cmd line mode
 set backspace=2         " backspace to do indent,eol,start based working
+set cmdheight=2         " make command line height to 2 
 
 " Overriding default programs
 let g:python3_host_prog = "$HOME/.pyenv/shims/python"       " python path since using pyenv
@@ -69,8 +70,8 @@ let g:vimtex_quickfix_mode = 0          " to avoid error window unless manually 
 " tex-conceal
 set conceallevel=1                      " try to conceal or show the normal text
 let g:tex_conceal = 'abdmg'             " convert tex to actual utf-8 characters only super and subscript is left out
-let g:tex_superscripts = "[0-9a-zA-W.,:;+-<>/()=]" " super scripts only allowed by the font [yet to try and refine]
-let g:tex_subscripts = "[0-9aehijklmnoprstuvx,+-/().]" " sub scripts only allowed by the font [yet to try and refine]
+" let g:tex_superscripts =  [0-9a-zA-W.,:;+-<>/()=]  " super scripts only allowed by the font [yet to try and refine]
+" let g:tex_subscripts = [0-9aehijklmnoprtuvx,+-/().] " sub scripts only allowed by the font [yet to try and refine]
 let g:tex_conceal_frac = 1                " to conceal fraction of 1
 hi Conceal guibg=none 
 hi Conceal cterm=none
@@ -79,7 +80,7 @@ hi Conceal cterm=none
 let g:UltiSnipsExpandTrigger = "<tab>"          " expand the snippet on tab
 let g:UltiSnipsJumpForwardTrigger = "<tab>"     " jump to next placeholder on tab
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"  " jump back to previous on shift tab 
-let g:UltiSnipsEditSplit="vertical"             " use vertical split for snippet edit 
+let g:UltiSnipsEditSplit="horizontal"             " use vertical split for snippet edit 
 set rtp+=~/Documents/Physics/current-course     " use snippets from this path also
 
 " Inkscape Configuration 
