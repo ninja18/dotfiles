@@ -34,6 +34,15 @@ augroup END
 let g:python3_host_prog = "$HOME/.pyenv/shims/python"       " python path since using pyenv
 set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow " replacing grep program with ripgrep when using ':grep pat'
 
+" General Keybindings
+
+" keybindings to activate very magic mode 1. vm mode in normal search 2. vm mode in visual search 
+" 3. global cmd search and replace or any actions 4. vm mode in search and replace 
+nnoremap / /\v
+vnoremap / /\v
+nnoremap :g/ :g/\v
+nnoremap :g// :g//
+cnoremap %s/ %smagic/
 
 " NETRW File Explorer Config
 
