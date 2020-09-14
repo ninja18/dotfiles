@@ -1,0 +1,22 @@
+digit match : \d (anywhere in a line)  \D (not digit match)
+wildcard ( that can match any char): . (to use actual . use \.)
+Specific char (to match): [chars to match] put it inside [] (only individual chars are matched not whole word inside [])
+exclude specific char : [^chars to exclude] use ^ inside []
+char ranges (to specify range of sequential chars) : [0-6a-zA-Z] (use - operator) (only inside [])
+alphanumeric short form : \w (= [A-Za-z0-9_]) \W (= [^A-Za-z0-9])
+repetitive chars match : char{num } or [chars]{num of repetition} (some have ranges {min,max}) (can use with metachars as well)
+zero and more or one and more : char* or [chars]* zero or more, char+ or [chars]+ one or more
+optional char match : char? or [chars]? to optionally match if it is present
+whitespaces : \t \n  \s (for all whitespaces) \S (non-whitespace chars)  
+start and end of line : $ for end of line, ^ for start of line (this is different from ^ used inside [] for excluding) 
+Capturing groups : (group to capture) (use (chars) along with matching patterns before and after that) (Capture groups is the only way to make use of *,+,? on groups rather than individual chars)
+Nested groups : (group(sub)) (info comes from left to right paranthesis group)
+Conditional : (word1 | word2) ( | is or here ) (to match any of two word group)
+boundary of word and non-word char : \b (matches boundary of word char to non-word) ( \w+\b to match a word)
+Referencing captured groups : \0 \1 \2 for full matched text, group 1 , group 2 respectively (this can be used like to swap two numbers in search and replace (\d+)-(\d+) and replace \2-\1.
+
+
+
+often best practice to write as specific regular expressions as possible to ensure that
+we don't get false positives when matching against real world text.
+

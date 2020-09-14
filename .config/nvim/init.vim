@@ -22,10 +22,6 @@ set mouse=nicr          " mouse support in normal, insert, cmd line mode
 set backspace=2         " backspace to do indent,eol,start based working
 set cmdheight=2         " make command line height to 2 
 
-" Overriding default programs
-let g:python3_host_prog = "$HOME/.pyenv/shims/python"       " python path since using pyenv
-set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow " replacing grep program with ripgrep when using ':grep pat'
-
 augroup general
     " Check if autocmds already loaded
     if !exists("autocommands_loaded")
@@ -33,6 +29,23 @@ augroup general
         autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab " yaml specific indentation
     endif
 augroup END
+
+" Overriding default programs
+let g:python3_host_prog = "$HOME/.pyenv/shims/python"       " python path since using pyenv
+set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow " replacing grep program with ripgrep when using ':grep pat'
+
+
+" NETRW File Explorer Config
+
+let g:netrw_banner = 0                          " hide the banner 
+let g:netrw_altfile = 0                         " When pressed Ctrl-^ goes to browsing buffer(file explorer)
+let netrw_compress = "gzip"                     " program used to compress file when pressing 'mz'
+let netrw_winsize = 70                          " percentage of newly opened file's window size from netrw
+let netrw_keepdir = 0                           " make browsing dir as current dir(useful when moving and copying files to dir)
+let netrw_liststyle = 0                         " simple style of listing files (pressing i will change style)
+let netrw_list_hide = netrw_gitignore#Hide()    " to hide pattern of files, gitignore can also be used [yet to configure]
+let g:netrw_special_syntax = 1                  " highlight some file types 
+
 
 " PLUGIN MANAGEMENT
 
