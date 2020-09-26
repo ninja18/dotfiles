@@ -16,11 +16,11 @@ set laststatus=2        " show status line below always (0 = never)
 set ruler               " show line number and column number at the bottom
 set showcmd             " show the command being typed at bottom
 set termguicolors       " for vibrant colors
-colorscheme desert      " desert and evening are decent looking 
 syntax enable           " syntax highlighting [enable => current color setting; on => overrides color setting]
 set mouse=nicr          " mouse support in normal, insert, cmd line mode
 set backspace=2         " backspace to do indent,eol,start based working
 set cmdheight=2         " make command line height to 2 
+filetype plugin indent on " enable filetype detection and plugins and indent based on filetype
 
 augroup general
     " Check if autocmds already loaded
@@ -37,12 +37,14 @@ set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --follow " replacing grep pro
 " General Keybindings
 
 " keybindings to activate very magic mode 1. vm mode in normal search 2. vm mode in visual search 
-" 3. global cmd search and replace or any actions 4. vm mode in search and replace 
+" 3. global cmd search and replace or any actions 4. vm mode in search and replace 5. search and
+" replace the word under cursor
 nnoremap / /\v
 vnoremap / /\v
 nnoremap :g/ :g/\v
 nnoremap :g// :g//
 cnoremap %s/ %smagic/
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 
 " NETRW File Explorer Config
 
@@ -66,14 +68,21 @@ call plug#begin()
     Plug 'lervag/vimtex' " latex support for vim
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " add more support to conceal feature of vim
     Plug 'SirVer/ultisnips' " snippet plugin
+    Plug 'luochen1990/rainbow' " parantheses highlighting for lisp like languages
+    Plug 'gryf/wombat256grf' " current colorscheme very vibrant
+    Plug 'sainnhe/gruvbox-material' " not used colorscheme too dim
 
 call plug#end()
 
 " PLUGIN CONFIGURATIONS & KEYBINDINGS
 
+" colorscheme
+colorscheme wombat256grf " quite vibrant but couldn't find a better one (non-colorschemes work only after calling the plug cmd. So putting it here 
+
 " fzf
 let $FZF_DEFAULT_COMMAND = "rg --files --hidden -g '!.git' -g '!Library' -g '!Music'" " have to override default fzf command in vim as well
 let g:fzf_preview_window = ''           " disable fzf preview window while searching; to enable 'right:60%'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded'} } " pop up size
 nnoremap <leader>fi  :Files<CR> 
 nnoremap <leader>fg  :GFiles?<CR>
 nnoremap <leader>fl  :Lines<CR>
@@ -111,3 +120,15 @@ set rtp+=~/Documents/Physics/current-course     " use snippets from this path al
 inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
 " open popup to search for inkscape files in figures/ folder in normal mode
 nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
+
+" Rainbow config
+let g:rainbow_active = 1 " to toggle rainbow plugin [might need to avoid some colors see junegunn's plugin]
+
+" Clojure-static config [builtin-plugin]
+let g:clojure_syntax_keywords = {
+    \ 'clojureMacro': ["defproject", "defcustom"],
+    \ 'clojureFunc': ["string/join", "string/replace"]
+    \ }
+let g:clojure_align_multiline_strings = 1 " align multiline strings
+let g:clojure_align_subforms = 1 " align subforms
+
