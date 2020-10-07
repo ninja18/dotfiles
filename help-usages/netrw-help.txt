@@ -24,6 +24,7 @@ X execute file
 mz to compress/decompress marked files
 cd to make browsing directory the current dir (important when moving and copying files)
 mm move marked files to target dir
+mx run a shell command to marked files 
 
 
 Rex to go to netrw if editing a file and vice versa
@@ -45,3 +46,8 @@ cb vice versa
 qL to convert location-list to mark list
 mr to mark using regex
 marking using visual selection[ V and select multiple lines then :norm mf]
+
+
+#bugs
+netrw_list_hide gitignore will not obey regex patterns like *.py[cod] instead of hiding pattern like
+*.pyc it hides *.py itself.

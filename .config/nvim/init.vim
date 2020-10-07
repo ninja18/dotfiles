@@ -54,7 +54,7 @@ let netrw_compress = "gzip"                     " program used to compress file 
 let netrw_winsize = 70                          " percentage of newly opened file's window size from netrw
 let netrw_keepdir = 0                           " make browsing dir as current dir(useful when moving and copying files to dir)
 let netrw_liststyle = 0                         " simple style of listing files (pressing i will change style)
-let netrw_list_hide = netrw_gitignore#Hide()    " to hide pattern of files, gitignore can also be used [yet to configure]
+let netrw_list_hide = ""    " to hide pattern of files, gitignore can also be used [yet to configure]
 let g:netrw_special_syntax = 1                  " highlight some file types 
 
 
@@ -71,7 +71,7 @@ call plug#begin()
     Plug 'luochen1990/rainbow' " parantheses highlighting for lisp like languages
     Plug 'gryf/wombat256grf' " current colorscheme very vibrant
     Plug 'sainnhe/gruvbox-material' " not used colorscheme too dim
-
+    Plug 'Olical/conjure', {'tag': 'v4.5.0'} " repl and completion support for clojure and other lisp based languages
 call plug#end()
 
 " PLUGIN CONFIGURATIONS & KEYBINDINGS
