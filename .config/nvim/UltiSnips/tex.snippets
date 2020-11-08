@@ -675,4 +675,16 @@ snippet rta "Right arrow"
 \rightarrow
 endsnippet
 
+context "math()"
+snippet "e" "Exponential" iA
+e^{$1}$0
+endsnippet
+
+snippet ques "Question Image" b
+\begin{figure}[${1:htpb}]
+	\centering
+	${2:\includegraphics[width=1.0\textwidth]{`!p snip.rv = fn.split(".")[0]`-$3.png}}
+\end{figure}
+$0
+endsnippet
 # vim:ft=snippets
