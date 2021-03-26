@@ -446,7 +446,7 @@ snippet lll "l" iA
 endsnippet
 
 context "math()"
-snippet nabl "nabla" iA
+snippet nab "nabla" iA
 \nabla 
 endsnippet
 
@@ -522,11 +522,6 @@ endsnippet
 
 snippet << "<<" iA
 \ll
-endsnippet
-
-
-snippet ~~ "~" iA
-\sim 
 endsnippet
 
 context "math()"
@@ -676,15 +671,41 @@ snippet rta "Right arrow"
 endsnippet
 
 context "math()"
-snippet "e" "Exponential" iA
+snippet e "Exponential" A
 e^{$1}$0
 endsnippet
 
+snippet ~~ "Right arrow" iA
+\approx
+endsnippet
+
 snippet ques "Question Image" b
-\begin{figure}[${1:htpb}]
+\begin{figure}[{h!}]
 	\centering
 	${2:\includegraphics[width=1.0\textwidth]{`!p snip.rv = fn.split(".")[0]`-$3.png}}
 \end{figure}
+
+\subsection*{Solution:}
+
 $0
+endsnippet
+
+snippet bb "Bold the selected text"
+\textbf{${1:${VISUAL}}}
+endsnippet
+
+context "math()" 
+snippet ' "Prime" iA 
+\prime
+endsnippet
+
+context "math()" 
+snippet aa "Alpha" iA 
+\alpha
+endsnippet
+
+context "math()" 
+snippet ww "Omega" iA 
+\omega
 endsnippet
 # vim:ft=snippets

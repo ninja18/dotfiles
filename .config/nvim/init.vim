@@ -3,7 +3,7 @@
 let mapleader = " "     " global leader key
 let maplocalleader = " " " local leader key
 set expandtab		    " enter spaces when tab is pressed
-set textwidth=100	    " break lines when line length crosses 120
+" set textwidth=100	    " break lines when line length crosses 120
 set tabstop=4		    " use 4 spaces to represent tab
 set shiftwidth=4	    " number of spaces to use for auto indent
 set autoindent          " copy indent of current line to next line
@@ -20,6 +20,13 @@ syntax enable           " syntax highlighting [enable => current color setting; 
 set mouse=nicr          " mouse support in normal, insert, cmd line mode
 set backspace=2         " backspace to do indent,eol,start based working
 set cmdheight=2         " make command line height to 2 
+set number              " set line number (need to work on this)
+
+" spell check and correct 
+setlocal spell
+set spelllang=en_gb
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
 filetype plugin indent on " enable filetype detection and plugins and indent based on filetype
 
 augroup general
@@ -27,6 +34,7 @@ augroup general
     if !exists("autocommands_loaded")
         let autocommands_loaded = 1
         autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab " yaml specific indentation
+        autocmd FileType python setlocal foldenable foldmethod=syntax " based on the syntax added for docstrings check ~/.vim/after/syntax/python.vim
     endif
 augroup END
 
@@ -44,7 +52,7 @@ vnoremap / /\v
 nnoremap :g/ :g/\v
 nnoremap :g// :g//
 cnoremap %s/ %smagic/
-nnoremap <leader>s :%s/\<<C-r><C-w>\>/
+nnoremap <leader>s :%smagic/\<<C-r><C-w>\>/
 
 " NETRW File Explorer Config
 
@@ -72,6 +80,8 @@ call plug#begin()
     Plug 'gryf/wombat256grf' " current colorscheme very vibrant
     Plug 'sainnhe/gruvbox-material' " not used colorscheme too dim
     Plug 'Olical/conjure', {'tag': 'v4.5.0'} " repl and completion support for clojure and other lisp based languages
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " go development
+    Plug 'neovim/nvim-lspconfig' " set of configs for all common languages, to be used with nvim's builtin lsp client
 call plug#end()
 
 " PLUGIN CONFIGURATIONS & KEYBINDINGS
@@ -115,7 +125,6 @@ let g:UltiSnipsEditSplit="horizontal"             " use vertical split for snipp
 set rtp+=~/Documents/Physics/current-course     " use snippets from this path also
 
 " Inkscape Configuration 
-
 " to open inkscape with given title in insert mode
 inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
 " open popup to search for inkscape files in figures/ folder in normal mode
@@ -131,4 +140,27 @@ let g:clojure_syntax_keywords = {
     \ }
 let g:clojure_align_multiline_strings = 1 " align multiline strings
 let g:clojure_align_subforms = 1 " align subforms
+
+" Vim-go config
+let g:go_highlight_types = 1
+let g:go_highlight_functions = 1
+
+" Neovim LSP config
+:lua << EOF
+require'nvim_lsp'.jdtls.setup{}
+require'nvim_lsp'.gopls.setup{}
+require'nvim_lsp'.pyls.setup{}
+EOF
+" cmd = {"gopls","-remote","localhost:7050"};
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+
+autocmd Filetype java,python,go setlocal omnifunc=v:lua.vim.lsp.omnifunc
 

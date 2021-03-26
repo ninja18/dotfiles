@@ -1,16 +1,23 @@
 # Export variables
-
 export PATH=/usr/local/texlive/2020/bin/x86_64-darwin:$PATH
 export PATH=/Users/ninja/Documents/Others/sage/other_comps:$PATH
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export GOROOT="/usr/local/go"
+export GOPATH="$HOME/go"
+export PATH="$GOROOT/bin:$PATH"
 export XDG_CONFIG_HOME=~/.config
 export VISUAL=nvim
 export EDITOR=nvim
 #export JAVA_HOME=$(/usr/libexec/java_home -v 12)
 export ZSH="/Users/ninja/.oh-my-zsh"
 export MY_CONFIG="$HOME/Documents/my_config"
+export NVM_DIR="$HOME/.nvm"
+export ANDROID_HOME=/Users/ninja/Library/Android/sdk
+export ANDROID_SDK_ROOT=/Users/ninja/Library/Android/sdk
+export ANDROID_AVD_HOME=/Users/ninja/.android/avd
 ZSH_THEME="typewritten"
 
 # Plugins
@@ -34,8 +41,8 @@ source $ZSH/oh-my-zsh.sh
 . /usr/local/etc/profile.d/z.sh
 
 # Aliases
-
-alias config='/usr/local/bin/git --git-dir=$MY_CONFIG/dotfiles --work-tree=$HOME'
+alias lsf='function _lsf(){ (cd $(dirname "$1") && echo $(pwd)/$(basename "$1")) };_lsf' # to print absolute path of file
+alias config='/usr/local/bin/git --git-dir=$MY_CONFIG/dotfiles --work-tree=$HOME' # git command for dotfiles and system config
 
 # Custom key bindings
 
@@ -50,6 +57,10 @@ eval "$(pyenv virtualenv-init -)"
 
 # jenv config
 eval "$(jenv init -)"
+
+# nvm config
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
