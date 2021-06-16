@@ -18,6 +18,8 @@ export NVM_DIR="$HOME/.nvm"
 export ANDROID_HOME=/Users/ninja/Library/Android/sdk
 export ANDROID_SDK_ROOT=/Users/ninja/Library/Android/sdk
 export ANDROID_AVD_HOME=/Users/ninja/.android/avd
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 ZSH_THEME="typewritten"
 
 # Plugins
@@ -50,10 +52,12 @@ bindkey '^ ' forward-word
 
 
 # pyenv config
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-eval "$(pyenv virtualenv-init -)"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+#if command -v pyenv 1>/dev/null 2>&1; then
+#  eval "$(pyenv init -)"
+#fi
+#eval "$(pyenv virtualenv-init -)"
 
 # jenv config
 eval "$(jenv init -)"

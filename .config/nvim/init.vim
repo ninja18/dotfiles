@@ -29,6 +29,7 @@ inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 filetype plugin indent on " enable filetype detection and plugins and indent based on filetype
 
+" My Auto commands
 augroup general
     " Check if autocmds already loaded
     if !exists("autocommands_loaded")
@@ -37,6 +38,8 @@ augroup general
         autocmd FileType python setlocal foldenable foldmethod=syntax " based on the syntax added for docstrings check ~/.vim/after/syntax/python.vim
     endif
 augroup END
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
 
 " Overriding default programs
 let g:python3_host_prog = "$HOME/.pyenv/shims/python"       " python path since using pyenv
@@ -78,16 +81,16 @@ call plug#begin()
     Plug 'SirVer/ultisnips' " snippet plugin
     Plug 'luochen1990/rainbow' " parantheses highlighting for lisp like languages
     Plug 'gryf/wombat256grf' " current colorscheme very vibrant
-    Plug 'sainnhe/gruvbox-material' " not used colorscheme too dim
     Plug 'Olical/conjure', {'tag': 'v4.5.0'} " repl and completion support for clojure and other lisp based languages
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " go development
     Plug 'neovim/nvim-lspconfig' " set of configs for all common languages, to be used with nvim's builtin lsp client
+
 call plug#end()
 
 " PLUGIN CONFIGURATIONS & KEYBINDINGS
 
 " colorscheme
-colorscheme wombat256grf " quite vibrant but couldn't find a better one (non-colorschemes work only after calling the plug cmd. So putting it here 
+colorscheme desert " quite vibrant but couldn't find a better one (non-colorschemes work only after calling the plug cmd. So putting it here 
 
 " fzf
 let $FZF_DEFAULT_COMMAND = "rg --files --hidden -g '!.git' -g '!Library' -g '!Music'" " have to override default fzf command in vim as well
@@ -147,9 +150,9 @@ let g:go_highlight_functions = 1
 
 " Neovim LSP config
 :lua << EOF
-require'nvim_lsp'.jdtls.setup{}
-require'nvim_lsp'.gopls.setup{}
-require'nvim_lsp'.pyls.setup{}
+require'lspconfig'.jdtls.setup{}
+require'lspconfig'.gopls.setup{}
+require'lspconfig'.pyls.setup{}
 EOF
 " cmd = {"gopls","-remote","localhost:7050"};
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
@@ -164,3 +167,11 @@ nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 
 autocmd Filetype java,python,go setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
+" My lua functions
+lua << EOF
+local api = vim.api
+function foldTill(match)
+    out = api.nvim_exec("g/Weekly/#",true)
+    print("Do you want to fold this: " .. out)
+end
+EOF
