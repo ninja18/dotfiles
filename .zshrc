@@ -5,6 +5,9 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="$HOME/.jenv/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/opt/curl/bin:$PATH"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
 export GOROOT="/usr/local/go"
 export GOPATH="$HOME/go"
 export PATH="$GOROOT/bin:$PATH"
@@ -21,6 +24,11 @@ export ANDROID_SDK_ROOT=/Users/ninja/Library/Android/sdk
 export ANDROID_AVD_HOME=/Users/ninja/.android/avd
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+export TALISMAN_HOME=/Users/ninja/.talisman/bin
+alias talisman=$TALISMAN_HOME/talisman_darwin_amd64
+export TALISMAN_INTERACTIVE=true
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
 ZSH_THEME="typewritten"
 
 # Plugins
@@ -102,3 +110,7 @@ eval "$(jenv init -)"
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+alias luamake=/Users/ninja/.config/nvim/lua-language-server/3rd/luamake/luamake
+
+[[ -s "/Users/ninja/.gvm/scripts/gvm" ]] && source "/Users/ninja/.gvm/scripts/gvm"
