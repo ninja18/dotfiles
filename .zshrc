@@ -8,6 +8,9 @@ export PATH="$HOME/go/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/opt/curl/bin:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
 export GOROOT="/usr/local/go"
 export GOPATH="$HOME/go"
 export PATH="$GOROOT/bin:$PATH"
@@ -27,8 +30,7 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 export TALISMAN_HOME=/Users/ninja/.talisman/bin
 alias talisman=$TALISMAN_HOME/talisman_darwin_amd64
 export TALISMAN_INTERACTIVE=true
-export LDFLAGS="-L/usr/local/opt/llvm/lib"
-export CPPFLAGS="-I/usr/local/opt/llvm/include"
+export ZK_NOTEBOOK_DIR="/Users/ninja/Documents/notes"
 ZSH_THEME="typewritten"
 
 # Plugins

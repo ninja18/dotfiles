@@ -80,8 +80,8 @@ cnoremap s/ smagic/
 nnoremap <leader>s :%smagic/\<<C-r><C-w>\>/
 nnoremap <leader>v :tabe $MYVIMRC<cr>
 nnoremap <leader>nh :nohl<cr>
-nmap <S-Tab> :tabprev<Return>
-nmap <Tab> :tabnext<Return>
+nnoremap <leader><S-Tab> :tabprev<Return>
+nnoremap <leader><Tab> :tabnext<Return>
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -138,13 +138,19 @@ call plug#begin()
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-nvim-lua'
+    Plug 'algotech/ultisnips-php'
+    Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main'}
     Plug 'kdheepak/cmp-latex-symbols'
-    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-    Plug 'vimwiki/vimwiki'
+    Plug 'hrsh7th/cmp-emoji'
+"    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"    Plug 'vimwiki/vimwiki'
     Plug 'tpope/vim-dispatch' " Setup key mappings
     Plug 'radenling/vim-dispatch-neovim'
     Plug 'clojure-vim/vim-jack-in' " setup key mappings
     Plug 'tpope/vim-fugitive'
+    Plug 'mickael-menu/zk-nvim'
+    Plug 'tomlion/vim-solidity'
+    Plug 'junegunn/seoul256.vim'
 
 call plug#end()
 
@@ -269,29 +275,15 @@ require'nvim-web-devicons'.setup { default=true;}
 EOF
 
 " nvim-tree config
-let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
 let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
 let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
 let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
 let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
-let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
 let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
 let g:nvim_tree_symlink_arrow = ' >> ' " defaults to ' ➛ '. used as a separator between symlinks' source and target.
 let g:nvim_tree_respect_buf_cwd = 1 "0 by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
-let g:nvim_tree_window_picker_exclude = {
-    \   'filetype': [
-    \     'packer',
-    \     'qf'
-    \   ],
-    \   'buftype': [
-    \     'terminal'
-    \   ]
-    \ }
-" Dictionary of buffer option names mapped to a list of option values that
-" indicates to the window picker that the buffer's window should not be
-" selectable.
 let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1, 'Jenkinsfile': 1 }
 let g:nvim_tree_show_icons = {
     \ 'git': 1,
@@ -332,68 +324,75 @@ let g:nvim_tree_icons = {
 
 nnoremap <leader>t :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
-nnoremap <leader>n :NvimTreeFindFile<CR>
 
 highlight NvimTreeFolderIcon guibg=blue
 
 :lua << EOF
 require'nvim-tree'.setup {
-  disable_netrw       = true,
-  hijack_netrw        = true,
-  open_on_setup       = false,
-  ignore_ft_on_setup  = { 'startify', 'dashboard' },
-  auto_close          = true,
-  open_on_tab         = true,
-  hijack_cursor       = false,
-  update_cwd          = false,
-  update_to_buf_dir   = {
+    disable_netrw       = true,
+    hijack_netrw        = true,
+    open_on_setup       = false,
+    ignore_ft_on_setup  = { 'startify', 'dashboard' },
+    auto_close          = true,
+    open_on_tab         = true,
+    hijack_cursor       = false,
+    update_cwd          = false,
+    update_to_buf_dir   = {
     enable = true,
     auto_open = true,
-  },
-  diagnostics = {
-    enable = true,
-    icons = {
-      hint = "",
-      info = "",
-      warning = "",
-      error = "",
+    },
+diagnostics = {
+enable = true,
+icons = {
+    hint = "",
+    info = "",
+    warning = "",
+    error = "",
     }
-  },
+},
   update_focused_file = {
-    enable      = false,
-    update_cwd  = false,
-    ignore_list = { '.git', 'node_modules', '.cache' }
+  enable      = false,
+  update_cwd  = false,
+  ignore_list = { '.git', 'node_modules', '.cache' }
   },
   system_open = {
-    cmd  = nil,
-    args = {}
-  },
+      cmd  = nil,
+      args = {}
+      },
   filters = {
-    dotfiles = true,
-    custom = { '.git', 'node_modules', '.cache' }
-  },
+      dotfiles = true,
+      custom = { '.git', 'node_modules', '.cache' }
+      },
   git = {
-    enable = true,
-    ignore = true,
-    timeout = 500,
+  enable = true,
+  ignore = true,
+  timeout = 500,
   },
   view = {
-    width = 60,
-    height = 30,
-    hide_root_folder = false,
-    side = 'right',
-    auto_resize = false,
-    mappings = {
-      custom_only = false,
-      list = {}
-    },
-    number = false,
-    relativenumber = false,
-    signcolumn = "yes"
-  },
+      width = 60,
+      height = 30,
+      hide_root_folder = false,
+      side = 'right',
+      auto_resize = false,
+      mappings = {
+          custom_only = false,
+          list = {}
+          },
+      number = false,
+      relativenumber = false,
+      signcolumn = "yes"
+      },
   trash = {
-    cmd = "trash",
-    require_confirm = true
+      cmd = "trash",
+      require_confirm = true
+      },
+  actions = {
+      open_file = {
+          window_picker = {
+          enable = false,
+          quit_on_open = true
+          }
+      }
   }
 }
 EOF
@@ -405,8 +404,36 @@ luafile $XDG_CONFIG_HOME/nvim/lua/navigation.lua
 luafile $XDG_CONFIG_HOME/nvim/lua/keymap.lua
 
 "vimwiki config
-let g:vimwiki_list = [{'path': '~/wiki/', 'syntax': 'markdown', 'ext': '.md'}]
+" let g:vimwiki_list = [{'path': '~/wiki/', 'syntax': 'markdown', 'ext': '.md'}]
 
 " Statusline setup
-
 set statusline=%#PmenuSel#%{FugitiveStatusline()}%#Title#\ [%n]\ %f%m%r%h%w%q%=%#StatusLine#%y\[%{&ff}\]\ \ \ line:%l/%L\ \ \ col:%c\ \ \ %p%%\ \ \ 
+
+" zk-nvim config
+:lua << EOF
+require("zk").setup({
+  picker = "fzf",
+
+  lsp = {
+    config = {
+      cmd = { "zk", "lsp" },
+      name = "zk",
+    },
+
+    auto_attach = {
+      enabled = true,
+      filetypes = { "markdown" },
+    },
+  },
+})
+
+vim.api.nvim_set_keymap("n", "<Leader>zc", "<cmd>ZkNew<CR>", { noremap = true })
+vim.api.nvim_set_keymap("x", "<Leader>zc", ":'<'>ZkNewFromTitleSelection<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>zn", "<cmd>ZkNotes<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>zb", "<cmd>ZkBacklinks<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>zl", "<cmd>ZkLinks<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>zt", "<cmd>ZkTags<CR>", { noremap = true })
+EOF
+
+autocmd Filetype markdown syn region markdownLinkText matchgroup=markdownLinkTextDelimiter start="!\=\[\%(\%(\_[^][]\|\[\_[^][]*\]\)*]\%( \=[[(]\)\)\@=" end="\]\%( \=[[(]\)\@=" nextgroup=markdownLink,markdownId skipwhite contains=@markdownInline,markdownLineStart concealends
+autocmd Filetype markdown syn region markdownLink matchgroup=markdownLinkDelimiter start="(" end=")" contains=markdownUrl keepend contained conceal
