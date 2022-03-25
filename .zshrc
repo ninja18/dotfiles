@@ -116,3 +116,5 @@ eval "$(jenv init -)"
 alias luamake=/Users/ninja/.config/nvim/lua-language-server/3rd/luamake/luamake
 
 [[ -s "/Users/ninja/.gvm/scripts/gvm" ]] && source "/Users/ninja/.gvm/scripts/gvm"
+
+source ~/zsh-helper/helper-functions.sh
