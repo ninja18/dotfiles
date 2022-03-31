@@ -18,10 +18,10 @@ function sessh() {
 
 
 function global_replace_usage() {
-       echo "Usage:\n $1 [-p pattern based | -f file based] [search pattern] [find string] [replace string] [directory to search]"
-       echo "Example usage:"
-       echo " $1 -f *.txt \"some(thing|where)\" \"nothing\" ."
-       echo " $1 -p \"some(thing|where)\" \"some(thing|where)\" \"nothing\" testdir"
+    echo "Usage:\n $1 [-p pattern based | -f file based] [search pattern] [find string] [replace string] [directory to search]"
+    echo "Example usage:"
+    echo " $1 -f *.txt \"some(thing|where)\" \"nothing\" ."
+    echo " $1 -p \"some(thing|where)\" \"some(thing|where)\" \"nothing\" testdir"
 }
 
 
@@ -67,13 +67,13 @@ function global_replace() {
     shift "$(($OPTIND-1))"
 
     if [[ -z $command ]]; then
-       echo "Missing required flags [-f | -p ]" 1>&2
-       global_replace_usage $(basename $0)
-       return 2
+        echo "Missing required flags [-f | -p ]" 1>&2
+        global_replace_usage $(basename $0)
+        return 2
     elif [[ "$#" -ne 4 ]]; then
-       echo "Missing arguments, expected 4 got $#" 1>&2
-       global_replace_usage $(basename $0)
-       return 2
+        echo "Missing arguments, expected 4 got $#" 1>&2
+        global_replace_usage $(basename $0)
+        return 2
     fi
 
     local search_pattern=$1
@@ -103,6 +103,37 @@ function global_replace() {
 # print number of instances modified
 # Test all the above cases once
 
+function jws_encode_usage() {
+    echo "Usage:\n $1 [json data file] [private key pem file] [algorithm name]"
+    echo "Example usage:"
+    echo " $1 config.json key.pem ES384"
+}
+
+function jws_encode() {
+    if [[ "$#" -ne 3 ]]; then
+        echo "Missing arguments, expected 3 got $#" 1>&2
+        jws_encode_usage $(basename $0)
+        return 2
+    fi
+
+    local data=$1
+    local private_key=$2
+    local algorithm=$3
+
+    # call python script pass args
+    python - $data $private_key $algorithm << EOF
+import jwt
+from pathlib import Path
+import json
+import sys
+
+private_key = Path(sys.argv[2]).read_text()
+payload = Path(sys.argv[1]).read_text()
+encoded = jwt.encode(json.loads(payload), private_key, algorithm=sys.argv[3])
+print(encoded)
+EOF
+
+}
 
 # Questions:
 # why [[ ]] than [ ]
