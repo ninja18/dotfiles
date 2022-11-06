@@ -97,6 +97,14 @@ nnoremap <leader>Y gg"+yG
 nnoremap <Leader>+ :vertical resize +10<CR>
 nnoremap <Leader>- :vertical resize -10<CR>
 nnoremap <Leader>rp :resize 100<CR>
+" Open quickfix at bottom of all windows
+noremap <leader>q :botright copen<cr>
+" Close Quickfix
+noremap <leader>Q :cclose<cr>
+
+" Open/close location list
+noremap <leader>l :lopen<cr>
+noremap <leader>L :lclose<cr>
 
 " NETRW File Explorer Config
 
@@ -115,7 +123,7 @@ let g:netrw_special_syntax = 1                  " highlight some file types
 call plug#begin()
 
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " add more support to conceal feature of vim
-    Plug 'Olical/conjure', {'tag': 'v4.5.0'} " repl and completion support for clojure and other lisp based languages
+    Plug 'Olical/conjure' " repl and completion support for clojure and other lisp based languages
     Plug 'SirVer/ultisnips' " snippet plugin
     Plug 'christoomey/vim-tmux-navigator' " navigating panes using Ctrl-hjkl between vim and tmux
     Plug 'guns/vim-sexp' " edit s-expressions using vim grammer
@@ -150,19 +158,24 @@ call plug#begin()
     Plug 'tpope/vim-fugitive'
     Plug 'mickael-menu/zk-nvim'
     Plug 'tomlion/vim-solidity'
-    Plug 'junegunn/seoul256.vim'
+    Plug 'chriskempson/base16-vim'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': ':call mkdp#util#install()', 'for': 'markdown' }
 
 call plug#end()
 
 " PLUGIN CONFIGURATIONS & KEYBINDINGS
 
 " colorscheme
-colorscheme gruvbox8 " quite vibrant but couldn't find a better one (non-colorschemes work only after calling the plug cmd. So putting it here 
+let base16colorspace=256
+colorscheme base16-gruvbox-dark-hard " quite vibrant but couldn't find a better one (non-colorschemes work only after calling the plug cmd. So putting it here 
 
 " fzf
-let $FZF_DEFAULT_COMMAND = "rg --files --hidden -g '!.git' -g '!Library' -g '!Music'" " have to override default fzf command in vim as well
+command! -bang -nargs=? -complete=dir HFiles
+  \ call fzf#vim#files(<q-args>, {'source': "rg --files --hidden -g '!.git' -g '!Library' -g '!Music'"}, <bang>0)
+let $FZF_DEFAULT_COMMAND = "rg --files --no-hidden -g '!.git' -g '!Library' -g '!Music'" " have to override default fzf command in vim as well
 let g:fzf_preview_window = ''           " disable fzf preview window while searching; to enable 'right:60%'
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded'} } " pop up size
+nnoremap <leader>f.  :HFiles<cr> 
 nnoremap <leader>fi  :Files<cr> 
 nnoremap <leader>fg  :GFiles?<cr>
 nnoremap <leader>fl  :Lines<cr>
@@ -193,6 +206,7 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"     " jump to next placeholder on ta
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"  " jump back to previous on shift tab 
 let g:UltiSnipsEditSplit="horizontal"             " use vertical split for snippet edit 
 set rtp+=~/Documents/Physics/current-course     " use snippets from this path also
+set rtp^=~/.config/nvim/slimv
 
 " Inkscape Configuration 
 " to open inkscape with given title in insert mode
@@ -217,7 +231,6 @@ local util = require 'lspconfig.util'
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-require'lspconfig'.jdtls.setup{ capabilities = capabilities,}
 require'lspconfig'.pyright.setup{ capabilities = capabilities,}
 require'lspconfig'.clojure_lsp.setup{ capabilities = capabilities,}
 require'lspconfig'.ccls.setup{ 
@@ -229,6 +242,12 @@ init_options = {
         directory = ".ccls-cache";
         };
     }
+}
+require 'lspconfig'.tsserver.setup {
+  capabilities = capabilities,
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+  root_dir = util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+  cmd = { "typescript-language-server", "--stdio" },
 }
 EOF
 " cmd = {"gopls","-remote","localhost:7050"};
@@ -252,15 +271,13 @@ require'nvim-treesitter.configs'.setup {
   highlight = { enable = true },
   incremental_selection = { enable = true },
   textobjects = { enable = true },
-  rainbow = {
-      enable = true,
-      max_file_lines = 1000,
-  },
   indent = {
-    enable = { "clojure", "cpp" }
+    enable = { "clojure", "cpp", "javascript"}
   },
-  ensure_installed = { "clojure", "python" } 
+  ensure_installed = { "clojure", "python", "markdown" } 
 }
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
 EOF
 
 " Undo tree Config
@@ -275,57 +292,11 @@ require'nvim-web-devicons'.setup { default=true;}
 EOF
 
 " nvim-tree config
-let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
-let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
-let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
-let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
-let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
-let g:nvim_tree_symlink_arrow = ' >> ' " defaults to ' ➛ '. used as a separator between symlinks' source and target.
-let g:nvim_tree_respect_buf_cwd = 1 "0 by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
-let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1, 'Jenkinsfile': 1 }
-let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 0,
-    \ 'files': 1,
-    \ 'folder_arrows': 0,
-    \ }
-"If 0, do not show the icons for one of 'git' 'folder' and 'files'
-let g:nvim_tree_icons = {
-    \ 'default': '',
-    \ 'symlink': '',
-    \ 'git': {
-    \   'unstaged': "✗",
-    \   'staged': "✓",
-    \   'unmerged': "",
-    \   'renamed': "➜",
-    \   'untracked': "★",
-    \   'deleted': "",
-    \   'ignored': "◌"
-    \   },
-    \ 'folder': {
-    \   'arrow_open': "",
-    \   'arrow_closed': "",
-    \   'default': "",
-    \   'open': "",
-    \   'empty': "",
-    \   'empty_open': "",
-    \   'symlink': "",
-    \   'symlink_open': "",
-    \   },
-    \   'lsp': {
-    \     'hint': "",
-    \     'info': "",
-    \     'warning': "",
-    \     'error': "",
-    \   }
-    \ }
+
+autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
 nnoremap <leader>t :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
-
-highlight NvimTreeFolderIcon guibg=blue
 
 :lua << EOF
 require'nvim-tree'.setup {
@@ -333,11 +304,10 @@ require'nvim-tree'.setup {
     hijack_netrw        = true,
     open_on_setup       = false,
     ignore_ft_on_setup  = { 'startify', 'dashboard' },
-    auto_close          = true,
     open_on_tab         = true,
     hijack_cursor       = false,
     update_cwd          = false,
-    update_to_buf_dir   = {
+    hijack_directories   = {
     enable = true,
     auto_open = true,
     },
@@ -373,14 +343,14 @@ icons = {
       height = 30,
       hide_root_folder = false,
       side = 'right',
-      auto_resize = false,
       mappings = {
           custom_only = false,
           list = {}
           },
-      number = false,
-      relativenumber = false,
       signcolumn = "yes"
+      },
+  renderer = {
+      special_files = { "README.md", "Makefile", "MAKEFILE", "Jenkinsfile" }
       },
   trash = {
       cmd = "trash",
@@ -390,12 +360,16 @@ icons = {
       open_file = {
           window_picker = {
           enable = false,
-          quit_on_open = true
-          }
+          },
+          quit_on_open = true,
+          resize_window = true,
       }
   }
 }
 EOF
+
+" conjure config
+let g:conjure#filetypes = ["clojure", "fennel", "janet", "racket", "scheme"]
 
 "nvim-cmp config
 luafile $XDG_CONFIG_HOME/nvim/lua/nvim-cmp-config.lua
@@ -403,8 +377,15 @@ luafile $XDG_CONFIG_HOME/nvim/lua/lsp/lua-ls.lua
 luafile $XDG_CONFIG_HOME/nvim/lua/navigation.lua
 luafile $XDG_CONFIG_HOME/nvim/lua/keymap.lua
 
+" slimv config
+let g:slimv_disable_clojure = 1
+"let g:slimv_impl = 'sbcl'
+
 "vimwiki config
 " let g:vimwiki_list = [{'path': '~/wiki/', 'syntax': 'markdown', 'ext': '.md'}]
+
+" markdown-preview
+let g:mkdp_browser = 'Firefox'
 
 " Statusline setup
 set statusline=%#PmenuSel#%{FugitiveStatusline()}%#Title#\ [%n]\ %f%m%r%h%w%q%=%#StatusLine#%y\[%{&ff}\]\ \ \ line:%l/%L\ \ \ col:%c\ \ \ %p%%\ \ \ 

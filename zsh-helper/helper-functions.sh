@@ -13,7 +13,7 @@ function sessh() {
         return 6
     fi
 
-    ssh ubuntu@$ip
+    ssh -X ubuntu@$ip
 }
 
 
