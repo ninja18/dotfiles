@@ -148,7 +148,7 @@ call plug#begin()
     Plug 'hrsh7th/cmp-nvim-lua'
     Plug 'algotech/ultisnips-php'
     Plug 'quangnguyen30192/cmp-nvim-ultisnips', {'branch': 'main'}
-    Plug 'kdheepak/cmp-latex-symbols'
+    Plug 'hrsh7th/cmp-omni'
     Plug 'hrsh7th/cmp-emoji'
 "    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "    Plug 'vimwiki/vimwiki'
@@ -187,8 +187,10 @@ nnoremap <leader>fc  :History:<cr>
 nnoremap <leader>fC  :Colors<cr>
 
 " vimtex
-let g:tex_flavor = 'latex'              " tex type either latex,plain,etc
-let g:vimtex_view_method = 'zathura'    " pdf viewer to use when running view cmd
+let g:tex_flavor='latex'              " tex type either latex,plain,etc
+let g:vimtex_view_method='skim' " Choose which program to use to view PDF file 
+let g:vimtex_view_skim_sync = 1 " Value 1 allows forward search after every successful compilation
+" let g:vimtex_view_skim_activate = 1 " Value 1 allows change focus to skim after command `:VimtexView` is given
 let g:vimtex_quickfix_mode = 0          " to avoid error window unless manually called 
 
 " tex-conceal
