@@ -12,11 +12,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+  'tpope/vim-sleuth',
+  'tpope/vim-fugitive',
+  { 'numToStr/Comment.nvim', opts = {} },
   { 'kyazdani42/nvim-web-devicons', lazy = true },
+  { 'knubie/vim-kitty-navigator', build = 'cp ./*.py ~/.config/kitty/' },
 
-  -- Configure later: with keymaps and test
   {
-    'lewis6991/gitsigns.nvim',
+    'lewis6991/gitsigns.nvim', -- Configure later: with keymaps and test
     lazy = true,
     dependencies = {
       'kyazdani42/nvim-web-devicons',
@@ -41,6 +44,14 @@ require('lazy').setup({
         'kyazdani42/nvim-web-devicons',
         'lewis6991/gitsigns.nvim',
       },
+  },
+
+  {
+    'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+    build = ':TSUpdate',
   },
 }, {})
 
