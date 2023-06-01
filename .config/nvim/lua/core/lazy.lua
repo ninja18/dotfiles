@@ -61,5 +61,23 @@ require('lazy').setup({
   },
 
   { "mickael-menu/zk-nvim", lazy = true },
+
+   {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      { 'williamboman/mason.nvim', config = true },
+      'williamboman/mason-lspconfig.nvim',
+      { 'j-hui/fidget.nvim', opts = {} }, -- Useful status updates for LSP
+    },
+  },
+
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-nvim-lsp',
+    },
+  },
 }, {})
 
