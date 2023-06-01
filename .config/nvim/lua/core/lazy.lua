@@ -17,6 +17,21 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
   { 'kyazdani42/nvim-web-devicons', lazy = true },
   { 'knubie/vim-kitty-navigator', build = 'cp ./*.py ~/.config/kitty/' },
+  { 'machakann/vim-sandwich',
+    config = function()
+      vim.cmd [[
+        let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+        let g:sandwich#recipes += [
+        \   {'buns': ['{ ', ' }'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['{']},
+        \   {'buns': ['[ ', ' ]'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['[']},
+        \   {'buns': ['( ', ' )'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['(']},
+        \   {'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},
+        \   {'buns': ['\[\s*', '\s*\]'], 'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['[']},
+        \   {'buns': ['(\s*', '\s*)'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['(']},
+        \ ]
+        ]]
+    end
+  }, 
 
   {
     'lewis6991/gitsigns.nvim', -- Configure later: with keymaps and test
