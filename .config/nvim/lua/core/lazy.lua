@@ -15,7 +15,7 @@ require('lazy').setup({
   'tpope/vim-sleuth',
   'tpope/vim-fugitive',
   { 'numToStr/Comment.nvim', opts = {} },
-  { 'kyazdani42/nvim-web-devicons', lazy = true },
+  { 'nvim-tree/nvim-web-devicons', lazy = true },
   { 'knubie/vim-kitty-navigator', build = 'cp ./*.py ~/.config/kitty/' },
   { 'machakann/vim-sandwich',
     config = function()
@@ -37,7 +37,7 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim', -- Configure later: with keymaps and test
     lazy = true,
     dependencies = {
-      'kyazdani42/nvim-web-devicons',
+      'nvim-tree/nvim-web-devicons',
     },
     config = function() 
       require('gitsigns').setup{}
@@ -56,7 +56,7 @@ require('lazy').setup({
   {
     'nvim-lualine/lualine.nvim',
     dependencies = {
-        'kyazdani42/nvim-web-devicons',
+        'nvim-tree/nvim-web-devicons',
         'lewis6991/gitsigns.nvim',
       },
   },
@@ -93,6 +93,22 @@ require('lazy').setup({
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
+    },
+  },
+
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+  -- Currently not sure about oil vs tree, so using both
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    dependencies = { 
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
     },
   },
 }, {})
