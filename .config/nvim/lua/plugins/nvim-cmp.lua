@@ -54,4 +54,10 @@ cmp.setup {
   completion = { completeopt = 'menu,menuone,noinsert' }
 }
 
-
+cmp.setup.filetype('tex', { -- Configure later: color scheme of completion doesn't show conceal char clearly
+  sources = {
+    { name = 'omni' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+  },
+})

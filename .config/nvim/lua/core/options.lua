@@ -1,9 +1,6 @@
 local g = vim.g
 local opt = vim.opt
 
-g.mapleader = ' '
-g.maplocalleader = ' '
-
 opt.number = true
 opt.relativenumber = true
 opt.hlsearch = true
@@ -20,6 +17,18 @@ opt.updatetime = 250
 opt.splitright = true
 opt.splitbelow = true
 opt.signcolumn = 'yes'
+
+-- Conceal settings affecting latex
+opt.conceallevel = 2
+g.tex_conceal = 'abdmgs'
+vim.cmd [[ 
+  hi Conceal guibg=NONE 
+  hi Conceal guifg=NONE 
+  hi Conceal ctermbg=NONE
+  hi Conceal ctermfg=NONE
+]]
+
+
 
 -- Disable unnecessary built-in plugins if performance is affected
 -- refer brainfucsec config for ideas

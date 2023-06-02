@@ -1,3 +1,6 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -13,7 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   'tpope/vim-sleuth',
-  'tpope/vim-fugitive',
+  'tpope/vim-fugitive', -- Learn
   { 'numToStr/Comment.nvim', opts = {} },
   { 'nvim-tree/nvim-web-devicons', lazy = true },
   { 'knubie/vim-kitty-navigator', build = 'cp ./*.py ~/.config/kitty/' },
@@ -34,7 +37,7 @@ require('lazy').setup({
   }, 
 
   {
-    'lewis6991/gitsigns.nvim', -- Configure later: with keymaps and test
+    'lewis6991/gitsigns.nvim', -- Configure later: with keymaps and test -- Learn
     lazy = true,
     dependencies = {
       'nvim-tree/nvim-web-devicons',
@@ -64,7 +67,7 @@ require('lazy').setup({
   {
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      'nvim-treesitter/nvim-treesitter-textobjects', -- Learn
     },
     build = ':TSUpdate',
   },
@@ -93,15 +96,17 @@ require('lazy').setup({
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-omni',
     },
   },
 
+  -- Currently not sure about oil vs tree, so using both
   {
     'stevearc/oil.nvim',
     opts = {},
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
-  -- Currently not sure about oil vs tree, so using both
+
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -111,5 +116,8 @@ require('lazy').setup({
       "MunifTanjim/nui.nvim",
     },
   },
+
+  { 'lervag/vimtex' }, -- Learn: motion and texobjects offered by vimtex
+
 }, {})
 
