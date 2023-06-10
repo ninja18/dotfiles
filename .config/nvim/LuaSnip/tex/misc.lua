@@ -57,6 +57,12 @@ return {
 }
 \pdfsuppresswarningpagegroup=1
 
+% proof theorem env
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
 \titleformat
 {\chapter} % command
 [display] % shape
