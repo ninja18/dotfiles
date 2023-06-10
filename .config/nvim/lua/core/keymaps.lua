@@ -6,7 +6,7 @@ local function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-map('n', '<leader>nl', ':nohl<CR>')
+map('n', '<leader>nh', ':nohl<CR>')
 map('n', 'n', 'nzzzv')
 map('n', 'N', 'Nzzzv')
 map('i', '.', '.<c-g>u')

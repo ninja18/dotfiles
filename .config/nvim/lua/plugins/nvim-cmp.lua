@@ -1,20 +1,41 @@
+-- LuaSnip config
+local ls = require"luasnip"
+local s = ls.snippet
+local sn = ls.snippet_node
+local isn = ls.indent_snippet_node
+local t = ls.text_node
+local i = ls.insert_node
+local f = ls.function_node
+local c = ls.choice_node
+local d = ls.dynamic_node
+local r = ls.restore_node
+local events = require("luasnip.util.events")
+local ai = require("luasnip.nodes.absolute_indexer")
+local fmt = require("luasnip.extras.fmt").fmt
+local m = require("luasnip.extras").m
+local lambda = require("luasnip.extras").l
+local postfix = require("luasnip.extras.postfix").postfix
+
+ls.config.setup({
+  enable_autosnippets = true,
+  store_selection_keys = "<TAB>",
+  update_events = 'TextChanged,TextChangedI',
+})
+
+require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/LuaSnip/"})
+
+vim.keymap.set('', '<Leader>U', '<Cmd>lua require("luasnip.loaders.from_lua").lazy_load({paths = "~/.config/nvim/LuaSnip/"})<CR>')
+
+-- nvim-cmp config
 local cmp_status_ok, cmp = pcall(require, 'cmp')
 if not cmp_status_ok then
   return
 end
 
-local luasnip_status_ok, luasnip = pcall(require, 'luasnip')
-if not luasnip_status_ok then
-  return
-end
-
-require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
-
 cmp.setup {
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
+      ls.lsp_expand(args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert {
@@ -30,8 +51,8 @@ cmp.setup {
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
+      elseif ls.expand_or_locally_jumpable() then
+        ls.expand_or_jump()
       else
         fallback()
       end
@@ -39,8 +60,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
+      elseif ls.locally_jumpable(-1) then
+        ls.jump(-1)
       else
         fallback()
       end

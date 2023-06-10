@@ -121,3 +121,8 @@ require('lazy').setup({
 
 }, {})
 
+-- TODOs
+-- Complete snippets for latex
+-- learn to use git within neovim with fugitive, gitsigns and a diff plugin
+-- Configure some plugins later
+-- find and replace across multiple files - spectre and muren plugins, treesitter-refactor
