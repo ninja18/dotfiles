@@ -40,7 +40,20 @@ local servers = {
       '--background-index',
       '--clangd-tidy',
     },
-  }
+  },
+  lua_ls = {
+    Lua = {
+      runtime = { version = 'LuaJIT', },
+      diagnostics = { globals = { 'vim', 'hs' } },
+      workspace = {
+        library = {
+          vim.api.nvim_get_runtime_file('', true), -- Configure Later: not working properly
+          "/Users/niranjan/.hammerspoon/Spoons/EmmyLua.spoon/annotations",
+        },
+      },
+      telemetry = { enable = false },
+    }
+  },
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

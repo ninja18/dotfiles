@@ -79,6 +79,5 @@ cmp.setup.filetype('tex', { -- Configure later: color scheme of completion doesn
   sources = {
     { name = 'omni' },
     { name = 'luasnip' },
-    { name = 'buffer' },
   },
 })
