@@ -11,10 +11,11 @@ lualine.setup {
     section_separators = '',
   },
   sections = {
+    lualine_b = { 'branch' },
     lualine_c = {
       { 'filename', path = 2, },
     },
-    lualine_x = {}, -- Configure later: use this for lsp or git features after everything is done
+    lualine_x = {'diff', 'diagnostics'}, -- Configure later: use this for lsp or git features after everything is done
     lualine_y = {'%l/%L'},
   },
 }

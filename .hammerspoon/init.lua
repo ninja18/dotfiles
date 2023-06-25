@@ -32,3 +32,4 @@ hs.hotkey.bind(hyper, "L", function()
         AppWatch:stop()
     end)
 end)
+
