@@ -34,7 +34,7 @@ require('lazy').setup({
         \ ]
         ]]
     end
-  }, 
+  },
 
   {
     'lewis6991/gitsigns.nvim', -- Configure later: with keymaps and test -- Learn
@@ -75,7 +75,7 @@ require('lazy').setup({
   { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   { 'nvim-telescope/telescope-fzf-native.nvim',
-    build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' 
+    build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
   },
 
   { "mickael-menu/zk-nvim", lazy = true },
@@ -110,7 +110,7 @@ require('lazy').setup({
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
-    dependencies = { 
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
@@ -119,10 +119,22 @@ require('lazy').setup({
 
   { 'lervag/vimtex' }, -- Learn: motion and texobjects offered by vimtex
 
+  'cdelledonne/vim-cmake',
+
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      'rcarriga/nvim-dap-ui', -- Learn: all readme items
+      'williamboman/mason.nvim',
+      'jay-babu/mason-nvim-dap.nvim',
+      'theHamsta/nvim-dap-virtual-text',
+      -- Add your own debuggers here
+    },
+  },
+
 }, {})
 
 -- TODOs
--- Complete snippets for latex
 -- learn to use git within neovim with fugitive, gitsigns and a diff plugin
 -- Configure some plugins later
 -- find and replace across multiple files - spectre and muren plugins, treesitter-refactor
