@@ -5,7 +5,7 @@ end
 
 nvim_treesitter.setup {
   ensure_installed = {
-    'bash', 'c', 'cpp', 'go', 'json', 'lua', 'markdown', 'python', 'vim',
+    'bash', 'c', 'cpp', 'go', 'json', 'lua', 'markdown', 'python', 'vim', 'tsx', 'css'
   },
   sync_install = false,
   highlight = {
@@ -24,6 +24,9 @@ nvim_treesitter.setup {
       node_decremental = '<M-space>',
     },
   },
+  autotag = {
+    enable = true,
+  }
 }
 
 vim.opt.foldmethod = "expr"

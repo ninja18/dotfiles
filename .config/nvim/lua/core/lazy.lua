@@ -17,10 +17,11 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   'tpope/vim-sleuth',
   'tpope/vim-fugitive', -- Learn
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',       opts = {} },
   { 'nvim-tree/nvim-web-devicons', lazy = true },
-  { 'knubie/vim-kitty-navigator', build = 'cp ./*.py ~/.config/kitty/' },
-  { 'machakann/vim-sandwich',
+  { 'knubie/vim-kitty-navigator',  build = 'cp ./*.py ~/.config/kitty/' },
+  {
+    'machakann/vim-sandwich',
     config = function()
       vim.cmd [[
         let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
@@ -42,9 +43,6 @@ require('lazy').setup({
     dependencies = {
       'nvim-tree/nvim-web-devicons',
     },
-    config = function() 
-      require('gitsigns').setup{}
-    end
   },
 
   {
@@ -52,40 +50,53 @@ require('lazy').setup({
     lazy = false,
     priority = 1000,
     config = function()
-	    vim.cmd([[colorscheme gruvbox-baby]])
+      vim.cmd([[colorscheme gruvbox-baby]])
     end,
   },
 
   {
     'nvim-lualine/lualine.nvim',
     dependencies = {
-        'nvim-tree/nvim-web-devicons',
-        'lewis6991/gitsigns.nvim',
-      },
+      'nvim-tree/nvim-web-devicons',
+      'lewis6991/gitsigns.nvim',
+    },
   },
 
   {
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects', -- Learn
+      'windwp/nvim-ts-autotag',
     },
     build = ':TSUpdate',
   },
-
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
-
-  { 'nvim-telescope/telescope-fzf-native.nvim',
-    build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {
+      check_ts = true,
+      ts_config = {
+        lua = { 'string' }, -- it will not add a pair on that treesitter node
+        javascript = { 'template_string' },
+      }
+    }
   },
 
-  { "mickael-menu/zk-nvim", lazy = true },
+  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build =
+    'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+  },
 
-   {
+  { "mickael-menu/zk-nvim",          lazy = true },
+
+  {
     'neovim/nvim-lspconfig',
     dependencies = {
       { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
-      { 'j-hui/fidget.nvim', opts = {} }, -- Useful status updates for LSP
+      { 'j-hui/fidget.nvim',       opts = {} }, -- Useful status updates for LSP
     },
   },
 
@@ -130,6 +141,16 @@ require('lazy').setup({
       'theHamsta/nvim-dap-virtual-text',
       -- Add your own debuggers here
     },
+  },
+
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require("auto-session").setup {
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/", "~/Documents/others/*", "~/Documents/programming/*", "~/Documents/Physics/*", "~/Downloads", "/" },
+      }
+    end
   },
 
 }, {})

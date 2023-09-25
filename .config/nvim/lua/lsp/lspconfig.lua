@@ -34,6 +34,10 @@ end
 local servers = {
   pyright = {},
   bashls = {},
+  cmake = {},
+  tsserver = {},
+  tailwindcss = {},
+  cssls = {},
   clangd = {
     cmd = {
       'clangd',

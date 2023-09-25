@@ -24,7 +24,8 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$GOROOT/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="$HOME/vcpkg:$PATH"
+#export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export VISUAL=nvim
@@ -33,15 +34,16 @@ export ZSH="$HOME/.oh-my-zsh"
 export NVM_DIR="$HOME/.nvm"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export ZK_NOTEBOOK_DIR="$HOME/Documents/notes"
 ZSH_THEME=""
 export TYPEWRITTEN_RELATIVE_PATH="adaptive"
 export TYPEWRITTEN_PROMPT_LAYOUT="singleline"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET" # required for zathura
-export LDFLAGS="-L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
-export CXXFLAGS="-I/opt/homebrew/opt/llvm/include -Wall -Werror -pedantic-errors"
-export CC=/opt/homebrew/opt/llvm/bin/clang
-export CXX=/opt/homebrew/opt/llvm/bin/clang++
+#export LDFLAGS="-L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
+#export CXXFLAGS="-I/opt/homebrew/opt/llvm/include -Wall -Werror -pedantic-errors"
+#export CC=/opt/homebrew/opt/llvm/bin/clang
+#export CXX=/opt/homebrew/opt/llvm/bin/clang++
 
 # To use the bundled libc++ please add the following LDFLAGS:
 #  LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
