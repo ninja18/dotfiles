@@ -36,12 +36,8 @@ def handle_result(args: list[str], answer: str, target_window_id: int, boss: Bos
     opts = fast_data_types.get_options()
 
     # set up keymaps (single keystrokes)
-    keymap: KeyMap = (
-        boss.keymap
-    )  # same as `opts.keymap`, except with global keymaps removed
-    keymap: dict[Shortcut, str] = {
-        Shortcut((key,)): action for key, action in keymap.items()
-    }
+    keymap: KeyMap = boss.keymap  # same as `opts.keymap`, except with global keymaps removed
+    keymap: dict[Shortcut, str] = {Shortcut((key,)): action for key, action in keymap.items()}
     # set up key sequences (combinations of keystrokes, separated by '>')
     seq_keymap: SequenceMap = opts.sequence_map
     seq_keymap: dict[Shortcut, str] = {

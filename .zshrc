@@ -35,6 +35,9 @@ export NVM_DIR="$HOME/.nvm"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export TALISMAN_HOME="$HOME/.talisman/bin"
+export PATH="$TALISMAN_HOME:$PATH"
+export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 export ZK_NOTEBOOK_DIR="$HOME/Documents/notes"
 ZSH_THEME=""
 export TYPEWRITTEN_RELATIVE_PATH="adaptive"
@@ -64,8 +67,8 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Aliases
 alias lsf='function _lsf(){ (cd $(dirname "$1") && echo $(pwd)/$(basename "$1")) };_lsf' # get absolute path
 alias config='/usr/bin/git --git-dir=$HOME/Documents/system-config/dotfiles --work-tree=$HOME'
-alias work-firefox='nohup /Applications/Firefox.app/Contents/MacOS/firefox-bin -P "Work" -no-remote > /dev/null 2>&1 &'
-alias finance-firefox='nohup /Applications/Firefox.app/Contents/MacOS/firefox-bin -P "Finance" -no-remote > /dev/null 2>&1 &'
+alias work-firefox='nohup /Applications/Firefox.app/Contents/MacOS/firefox -P "Work" -no-remote > /dev/null 2>&1 &'
+alias finance-firefox='nohup /Applications/Firefox.app/Contents/MacOS/firefox -P "Finance" -no-remote > /dev/null 2>&1 &'
 alias vlime='rlwrap sbcl --load ~/.local/share/nvim/plugged/vlime/lisp/start-vlime.lisp'
 alias sbcl-repl='rlwrap sbcl --eval "(ql:quickload :swank)"  --eval "(swank:create-server :dont-close t)"'
 
@@ -91,7 +94,8 @@ function nvimvenv {
   fi
 }
 
-alias vim=nvimvenv
+alias vim=nvim
+alias pvim='pipenv run nvim'
 
 # jenv config
 eval "$(jenv init -)"
@@ -106,3 +110,7 @@ eval "$(jenv init -)"
 fpath=($fpath "/Users/niranjan/.zfunctions")
 autoload -U promptinit; promptinit
 prompt typewritten
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
