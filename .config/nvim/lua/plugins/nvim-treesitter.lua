@@ -1,54 +1,94 @@
-local status_ok, nvim_treesitter = pcall(require, "nvim-treesitter.configs")
-if not status_ok then
-	return
-end
-
-nvim_treesitter.setup({
-	ensure_installed = {
-		"bash",
-		"c",
-		"cpp",
-		"go",
-		"json",
-		"lua",
-		"markdown",
-		"markdown_inline",
-		"regex",
-		"python",
-		"vim",
-		"tsx",
-		"css",
-		"typescript",
-		"javascript",
-		"rust",
+return {
+	{
+		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false,
+		build = ":TSUpdate",
+		config = function()
+			require("nvim-treesitter").setup({
+				install_dir = vim.fn.stdpath("data") .. "/site",
+			})
+			vim.treesitter.language.register("latex", "tex")
+			require("nvim-treesitter").install({
+				"bash",
+				"c",
+				"cmake",
+				"cpp",
+				"css",
+				"go",
+				"html",
+				"http",
+				"java",
+				"javascript",
+				"json",
+				"latex",
+				"lua",
+				"make",
+				"markdown",
+				"markdown_inline",
+				"python",
+				"regex",
+				"rust",
+				"tsx",
+				"typescript",
+				"vim",
+				"yaml",
+				"toml",
+				"xml",
+				"gitcommit",
+				"git_config",
+				"git_rebase",
+				"gitignore",
+			})
+		end,
 	},
-	auto_install = true,
-	sync_install = false,
-	highlight = {
-		enable = true,
-		additional_vim_regex_highlighting = false,
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
+		event = "VeryLazy",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("nvim-treesitter-textobjects").setup({
+				select = {
+					enable = true,
+					lookahead = true,
+				},
+				move = {
+					enable = true,
+					set_jumps = true,
+				},
+			})
+			vim.keymap.set({ "x", "o" }, "af", function()
+				require("nvim-treesitter-textobjects.select").select_textobject(
+					"@function.outer",
+					"textobjects"
+				)
+			end)
+			vim.keymap.set({ "x", "o" }, "if", function()
+				require("nvim-treesitter-textobjects.select").select_textobject(
+					"@function.inner",
+					"textobjects"
+				)
+			end)
+			vim.keymap.set({ "x", "o" }, "ac", function()
+				require("nvim-treesitter-textobjects.select").select_textobject(
+					"@class.outer",
+					"textobjects"
+				)
+			end)
+			vim.keymap.set({ "x", "o" }, "ic", function()
+				require("nvim-treesitter-textobjects.select").select_textobject(
+					"@class.inner",
+					"textobjects"
+				)
+			end)
+		end,
 	},
-	indent = {
-		enable = true,
-		disable = { "python" },
+	{
+		"windwp/nvim-ts-autotag",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			require("nvim-ts-autotag").setup({})
+		end,
 	},
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "<c-space>",
-			node_incremental = "<c-space>",
-			scope_incremental = "<c-s>",
-			node_decremental = "<M-space>",
-		},
-	},
-	autotag = {
-		enable = true,
-	},
-})
-
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldenable = false
-
--- Configure later: nvim-treesitter-textobjects is a great plugin do configs when needed
--- Problem: treesitter based folding works when file is opened from terminal but not through telescope for all language files
+}

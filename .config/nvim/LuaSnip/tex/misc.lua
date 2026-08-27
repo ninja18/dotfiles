@@ -1,35 +1,30 @@
-local helpers = require('utils.luasnip-helper')
+local helpers = require("utils.luasnip-helper")
 local get_visual = helpers.get_visual
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
 return {
-    s({trig="h1", snippetType="autosnippet"}, -- Configure later: might need not mathzone condition
-      fmta(
-	[[\section{<>}]],
-	{
-	  d(1, get_visual),
-	}
-      )
-    ),
-    s({trig="h2", snippetType="autosnippet"}, -- Configure later: might need not mathzone condition
-      fmta(
-	[[\subsection{<>}]],
-	{
-	  d(1, get_visual),
-	}
-      )
-    ),
-    s({trig="h3", snippetType="autosnippet"}, -- Configure later: might need not mathzone condition
-      fmta(
-	[[\subsubsection{<>}]],
-	{
-	  d(1, get_visual),
-	}
-      )
-    ),
-    s({trig = "template"},
-      fmta(
-        [[
+	s(
+		{ trig = "h1", snippetType = "autosnippet" }, -- Configure later: might need not mathzone condition
+		fmta([[\section{<>}]], {
+			d(1, get_visual),
+		})
+	),
+	s(
+		{ trig = "h2", snippetType = "autosnippet" }, -- Configure later: might need not mathzone condition
+		fmta([[\subsection{<>}]], {
+			d(1, get_visual),
+		})
+	),
+	s(
+		{ trig = "h3", snippetType = "autosnippet" }, -- Configure later: might need not mathzone condition
+		fmta([[\subsubsection{<>}]], {
+			d(1, get_visual),
+		})
+	),
+	s(
+		{ trig = "template" },
+		fmta(
+			[[
 \documentclass[a4paper]{report}
 
 \usepackage[utf8]{inputenc}
@@ -83,10 +78,10 @@ return {
   <>
 \end{document}
       ]],
-        {
-          i(0)
-        }
-      ),
-      { condition = line_begin }
-    ),
+			{
+				i(0),
+			}
+		),
+		{ condition = line_begin }
+	),
 }
