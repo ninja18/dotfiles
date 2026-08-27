@@ -113,6 +113,74 @@ Formatters (conform): stylua (lua), ruff (python), prettierd (js/ts/json/html/cs
 - **Rust**: rustaceanvim (rust-analyzer) — `:RustLsp` commands for run/codeAction/etc.
 - **CMake**: neocmakelsp LSP; `:CMakeBuild` / `<leader>cb` build.
 
+## Useful Maintenance Commands (no keymap)
+
+### LSP servers
+
+| Command | Action |
+| --- | --- |
+| `:checkhealth vim.lsp` | See which servers are attached + config health |
+| `:lua vim.print(vim.lsp.get_clients())` | List all attached LSP clients |
+| `:lua vim.print(vim.lsp.get_clients({ bufnr = 0 }))` | Servers attached to current buffer |
+| `:lsp enable <server>` | Activate a server config (e.g. `:lsp enable pyright`) |
+| `:lsp disable <server>` | Deactivate / stop a server config |
+| `:lsp restart` / `:lsp stop` | Restart / stop clients of current buffer |
+| `:lua print(vim.lsp.get_log_path())` | LSP log file path |
+| `:lua vim.lsp.set_log_level('debug')` | Verbose LSP logging (before reproducing an issue) |
+| `:Telescope lsp_*` | Search symbols/references via telescope |
+
+### Installed tools (LSP servers, formatters, linters)
+
+| Command | Action |
+| --- | --- |
+| `:Mason` | GUI list of all installed tools (servers/formatters/linters) |
+| `:MasonInstall <pkg>` | Install a tool (e.g. `:MasonInstall pyright`) |
+| `:MasonUninstall <pkg>` | Remove a tool |
+| `:MasonUpdate` | Update the mason registry |
+| `:MasonLog` | View install/update logs |
+
+### Treesitter parsers
+
+| Command | Action |
+| --- | --- |
+| `:TSInstall <lang>` | Install a parser (Tab for completion) |
+| `:TSUpdate` | Update all parsers |
+| `:TSUninstall <lang>` | Remove a parser |
+| `:lua vim.print(vim.treesitter.language._complete())` | List installed parsers |
+| `:checkhealth nvim-treesitter` | Parser status / health |
+| `:TSLog` | View treesitter log |
+
+### Plugins
+
+| Command | Action |
+| --- | --- |
+| `:Lazy` | Plugin manager UI |
+| `:Lazy update` | Update plugins (and `lazy-lock.json`) |
+| `:Lazy clean` | Remove unused plugins |
+| `:Lazy check` | Check for outdated plugins |
+| `:Lazy health` / `:checkhealth` | Health check for plugins / all |
+
+### Formatting & linting
+
+| Command | Action |
+| --- | --- |
+| `:ConformInfo` | Show which formatters apply to current buffer |
+| `:lua require('lint').try_lint()` | Run linters on current buffer manually |
+| `:lua vim.print(vim.diagnostic.get(0))` | Dump diagnostics for current buffer |
+| `:lua vim.diagnostic.enable()` / `.disable()` | Toggle diagnostics |
+
+### Filetype / tool-specific
+
+| Command | Action |
+| --- | --- |
+| `:VimtexCompile` / `:VimtexView` / `:VimtexClean` | Compile / view (Skim) / clean LaTeX |
+| `:CMakeGenerate` / `:CMakeBuild` / `:CMakeSettings` | CMake configure / build / settings |
+| `:RustLsp` | rust-analyzer actions (run, codeAction, hover, logFile) |
+| `:Gitsigns blame_line` / `:Gitsigns toggle_current_line_blame` | Git blame via command |
+| `:G` / `:Gstatus` | Fugitive git status |
+| `:Trouble diagnostics toggle` | Trouble diagnostics from command |
+| `:Flash` | Trigger flash from command |
+
 ## Folke Plugins
 
 - **noice.nvim** — replaces cmdline/messages/popup with a fancy UI (no keymaps bound).
