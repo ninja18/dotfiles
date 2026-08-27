@@ -43,6 +43,8 @@ ZSH_THEME=""
 export TYPEWRITTEN_RELATIVE_PATH="adaptive"
 export TYPEWRITTEN_PROMPT_LAYOUT="singleline"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=$DBUS_LAUNCHD_SESSION_BUS_SOCKET" # required for zathura
+export LIQUIBASE_HOME=/opt/homebrew/opt/liquibase/libexec
+export PATH="$HOME/dataos/darwin-arm64:$PATH"
 #export LDFLAGS="-L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
 #export CXXFLAGS="-I/opt/homebrew/opt/llvm/include -Wall -Werror -pedantic-errors"
 #export CC=/opt/homebrew/opt/llvm/bin/clang
@@ -69,6 +71,7 @@ alias lsf='function _lsf(){ (cd $(dirname "$1") && echo $(pwd)/$(basename "$1"))
 alias config='/usr/bin/git --git-dir=$HOME/Documents/system-config/dotfiles --work-tree=$HOME'
 alias work-firefox='nohup /Applications/Firefox.app/Contents/MacOS/firefox -P "Work" -no-remote > /dev/null 2>&1 &'
 alias finance-firefox='nohup /Applications/Firefox.app/Contents/MacOS/firefox -P "Finance" -no-remote > /dev/null 2>&1 &'
+alias personal-firefox='nohup /Applications/Firefox.app/Contents/MacOS/firefox -P "Personal" -no-remote > /dev/null 2>&1 &'
 alias vlime='rlwrap sbcl --load ~/.local/share/nvim/plugged/vlime/lisp/start-vlime.lisp'
 alias sbcl-repl='rlwrap sbcl --eval "(ql:quickload :swank)"  --eval "(swank:create-server :dont-close t)"'
 

@@ -1,3 +1,4 @@
+### SE SSH command ###
 function sessh() {
     username="${1:=ubuntu-india}"
 
@@ -16,7 +17,7 @@ function sessh() {
     ssh -X ubuntu@$ip
 }
 
-
+### Global replace command ###
 function global_replace_usage() {
     echo "Usage:\n $1 [-p pattern based | -f file based] [search pattern] [find string] [replace string] [directory to search]"
     echo "Example usage:"
@@ -103,6 +104,7 @@ function global_replace() {
 # print number of instances modified
 # Test all the above cases once
 
+### JWT Encode command ###
 function jws_encode_usage() {
     echo "Usage:\n $1 [json data file] [private key pem file] [algorithm name]"
     echo "Example usage:"
@@ -135,10 +137,24 @@ EOF
 
 }
 
+function run_in_loop() {
+    if [[ "$#" -lt 2 ]]; then
+        echo "Usage: $(basename $0) num_of_iterations command"
+        return 2
+    fi
+
+    local iter=$1
+    shift 1
+    local command_to_run=$@
+
+    for ((i=1;i<=$iter;i++)); do
+        $command_to_run
+    done
+}
+
 # Questions:
 # why [[ ]] than [ ]
 
 # Knowledge
 # use local for variables in funcs
 # use return if its a func ran in shell directly
-# 

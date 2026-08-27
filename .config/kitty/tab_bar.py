@@ -12,9 +12,6 @@ from kitty.tab_bar import (
     draw_attributed_string,
     draw_title,
 )
-import sys
-
-sys.path.append("/Users/niranjan/.pyenv/versions/3.12.3/lib/python3.12/site-packages")
 
 opts = get_options()
 icon_fg = as_rgb(color_as_int(opts.color16))
@@ -130,27 +127,70 @@ def _redraw_tab_bar(_):
         tm.mark_tab_bar_dirty()
 
 
+# def get_battery_cells() -> list:
+#     try:
+#         # with open("/sys/class/power_supply/BAT0/status", "r") as f:
+#         #     status = f.read()
+#         # with open("/sys/class/power_supply/BAT0/capacity", "r") as f:
+#         #     percent = int(f.read())
+#         import psutil
+#
+#         battery = psutil.sensors_battery()
+#         percent = battery.percent
+#         if not battery.power_plugged:
+#             # TODO: declare the lambda once and don't repeat the code
+#             icon_color = UNPLUGGED_COLORS[
+#                 min(UNPLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+#             ]
+#             icon = UNPLUGGED_ICONS[
+#                 min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+#             ]
+#         else:
+#             icon_color = PLUGGED_COLORS[
+#                 min(PLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+#             ]
+#             icon = PLUGGED_ICONS[
+#                 min(PLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+#             ]
+#         percent_cell = (bat_text_color, str(percent) + "% ")
+#         icon_cell = (icon_color, icon)
+#         return [percent_cell, icon_cell]
+#         return [percent_cell]
+#     except FileNotFoundError:
+#         return []
+
+
 def get_battery_cells() -> list:
     try:
-        # with open("/sys/class/power_supply/BAT0/status", "r") as f:
-        #     status = f.read()
-        # with open("/sys/class/power_supply/BAT0/capacity", "r") as f:
-        #     percent = int(f.read())
-        import psutil
-
-        battery = psutil.sensors_battery()
-        percent = battery.percent
-        # if not battery.power_plugged:
-        #     # TODO: declare the lambda once and don't repeat the code
-        #     icon_color = UNPLUGGED_COLORS[min(UNPLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))]
-        #     icon = UNPLUGGED_ICONS[min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))]
-        # else:
-        #     icon_color = PLUGGED_COLORS[min(PLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))]
-        #     icon = PLUGGED_ICONS[min(PLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))]
+        with open("/sys/class/power_supply/BAT0/status", "r") as f:
+            status = f.read()
+        with open("/sys/class/power_supply/BAT0/capacity", "r") as f:
+            percent = int(f.read())
+        if status == "Discharging\n":
+            # TODO: declare the lambda once and don't repeat the code
+            icon_color = UNPLUGGED_COLORS[
+                min(UNPLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+            ]
+            icon = UNPLUGGED_ICONS[
+                min(UNPLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+            ]
+        elif status == "Not charging\n":
+            icon_color = UNPLUGGED_COLORS[
+                min(UNPLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+            ]
+            icon = PLUGGED_ICONS[
+                min(PLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+            ]
+        else:
+            icon_color = PLUGGED_COLORS[
+                min(PLUGGED_COLORS.keys(), key=lambda x: abs(x - percent))
+            ]
+            icon = PLUGGED_ICONS[
+                min(PLUGGED_ICONS.keys(), key=lambda x: abs(x - percent))
+            ]
         percent_cell = (bat_text_color, str(percent) + "% ")
-        # icon_cell = (icon_color, icon)
-        # return [percent_cell, icon_cell]
-        return [percent_cell]
+        icon_cell = (icon_color, icon)
+        return [percent_cell, icon_cell]
     except FileNotFoundError:
         return []
 
